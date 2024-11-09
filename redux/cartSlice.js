@@ -77,7 +77,7 @@ export const {
   setCart,
 } = cartSlice.actions;
 
-// New async thunk to load the cart from storage on app start
+// New async thunk to load the cart from storage on app start.
 export const loadCart = () => async (dispatch) => {
   const cartItems = await loadCartFromStorage();
   dispatch(setCart(cartItems));
