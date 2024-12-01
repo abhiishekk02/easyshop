@@ -9,7 +9,10 @@ const IntroPage = () => {
 
   const handleStartShopping = () => {
     navigation.navigate("LandingPage");
-    console.log(AsyncStorage.getItem("cart"));
+  };
+
+  const handleStartVoiceShopping = () => {
+    navigation.navigate("Voice");
   };
   return (
     <View style={styles.container}>
@@ -26,7 +29,7 @@ const IntroPage = () => {
 
       <TouchableOpacity
         style={styles.manualShopping}
-        onPress={() => alert("Let's Shop!")}
+        onPress={handleStartVoiceShopping}
       >
         <Ionicons name="mic" size={40} color="white" style={styles.icon} />
 

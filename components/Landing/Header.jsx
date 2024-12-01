@@ -9,12 +9,15 @@ const Header = () => {
   const navigateToCart = () => {
     navigation.navigate("Cart");
   };
+  const navigateToScan = () => {
+    navigation.navigate("Scan");
+  };
   return (
     <View style={styles.header}>
       <Text style={styles.logo}>EasyShop</Text>
 
       <View style={styles.iconContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={navigateToScan}>
           <Ionicons name="scan-outline" size={24} color="white" />
         </TouchableOpacity>
         <TouchableOpacity onPress={navigateToCart}>

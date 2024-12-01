@@ -7,6 +7,8 @@ import LandingPage from "./components/Landing/LandingPage";
 import CartPage from "./components/Cart/CartPage";
 import { store } from "./redux/store";
 import { loadCart } from "./redux/cartSlice"; // Import the loadCart action
+import ProductsScan from "./components/Scan/ProductsScan";
+import VoiceAssistant from "./components/VoiceAssistance/VoiceOrder";
 
 const Stack = createStackNavigator();
 
@@ -23,6 +25,8 @@ export default function App() {
           <Stack.Screen name="IntroPage" component={IntroPage} />
           <Stack.Screen name="LandingPage" component={LandingPage} />
           <Stack.Screen name="Cart" component={CartPage} />
+          <Stack.Screen name="Scan" component={ProductsScan} />
+          <Stack.Screen name="Voice" component={VoiceAssistant} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

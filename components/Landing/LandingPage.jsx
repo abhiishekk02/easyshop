@@ -44,15 +44,12 @@ const LandingPage = ({ navigation }) => {
     dispatch(addToCart({ ...product, quantity: 1 }));
   };
 
-  const handleClearCart = () => {
-    Alert.alert("Clear Cart", "Are you sure you want to clear the cart?", [
-      { text: "Cancel", style: "cancel" },
-      { text: "Yes", onPress: () => dispatch(clearCart()) },
-    ]);
-  };
-
   const navigateToCart = () => {
     navigation.navigate("CartPage");
+  };
+
+  const navigateToScan = () => {
+    navigation.navigate("Scan");
   };
 
   const totalAmount = cartItems.reduce(
@@ -60,14 +57,21 @@ const LandingPage = ({ navigation }) => {
     0
   );
 
+  const handleClearCart = () => {
+    Alert.alert("Clear Cart", "Are you sure you want to clear the cart?", [
+      { text: "Cancel", style: "cancel" },
+      { text: "Yes", onPress: () => dispatch(clearCart()) }, // Dispatch clearCart action
+    ]);
+  };
+
   return (
     <>
       <Header />
       <ScrollView style={styles.container}>
         <SearchBar />
-        <TouchableOpacity style={styles.clearButton} onPress={handleClearCart}>
+        {/* <TouchableOpacity style={styles.clearButton} onPress={handleClearCart}>
           <Text style={styles.buttonText}>Clear Cart</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         {products.map((product) => (
           <ProductCard
             key={product.id}
@@ -76,10 +80,10 @@ const LandingPage = ({ navigation }) => {
             onUpdateCart={(quantity) => handleUpdateCart(product, quantity)}
           />
         ))}
-        <Text style={styles.totalText}>Total: ${totalAmount.toFixed(2)}</Text>
+        {/* <Text style={styles.totalText}>Total: ${totalAmount.toFixed(2)}</Text>
         <TouchableOpacity style={styles.ctaButton} onPress={navigateToCart}>
           <Text style={styles.ctaText}>Go to Cart</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </ScrollView>
     </>
   );
