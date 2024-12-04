@@ -1,7 +1,6 @@
-// components/Header.js
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons"; // Make sure you have expo/vector-icons installed
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 const Header = () => {
   const navigation = useNavigation();

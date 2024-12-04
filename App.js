@@ -6,7 +6,7 @@ import IntroPage from "./components/IntroPage/IntroPage";
 import LandingPage from "./components/Landing/LandingPage";
 import CartPage from "./components/Cart/CartPage";
 import { store } from "./redux/store";
-import { loadCart } from "./redux/cartSlice"; // Import the loadCart action
+import { loadCart } from "./redux/cartSlice";
 import ProductsScan from "./components/Scan/ProductsScan";
 import VoiceAssistant from "./components/VoiceAssistance/VoiceOrder";
 
@@ -14,7 +14,6 @@ const Stack = createStackNavigator();
 
 export default function App() {
   useEffect(() => {
-    // Load cart from AsyncStorage when the app starts
     store.dispatch(loadCart());
   }, []);
 

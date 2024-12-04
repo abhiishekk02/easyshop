@@ -19,15 +19,12 @@ export default function App() {
   const [recognizedProduct, setRecognizedProduct] = useState(null);
   const cameraRef = useRef(null);
 
-  // List of products to recognize
   const productList = ["Apple", "Banana", "Orange", "Mango", "Grapes", "phone"];
 
-  // Toggle between front and back camera
   function toggleCameraFacing() {
     setFacing((current) => (current === "back" ? "front" : "back"));
   }
 
-  // Capture the image from the camera
   const captureImage = async () => {
     if (cameraRef.current) {
       const photo = await cameraRef.current.takePictureAsync();
@@ -36,7 +33,6 @@ export default function App() {
     }
   };
 
-  // Send the captured image to Google Cloud Vision API
   const recognizeProduct = async (uri) => {
     const base64Image = await FileSystem.readAsStringAsync(uri, {
       encoding: FileSystem.EncodingType.Base64,
@@ -44,7 +40,7 @@ export default function App() {
 
     try {
       const response = await axios.post(
-        `https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDn1hXE87a2QxkBSMUmNhX4MhQJ7znhUMY`, // Use your API key here
+        `https://vision.googleapis.com/v1/images:annotate?key=AIzaSyDn1hXE87a2QxkBSMUmNhX4MhQJ7znhUMY`,
         {
           requests: [
             {
@@ -68,7 +64,6 @@ export default function App() {
         label.description.toLowerCase()
       );
 
-      // Check if any recognized label matches our product list
       const matchedProduct = productList.find((product) =>
         recognizedLabels.includes(product.toLowerCase())
       );
@@ -78,7 +73,7 @@ export default function App() {
 
         Speech.speak(`Product recognized: ${matchedProduct}`, {
           language: "en",
-        }); // Announce product name
+        });
       } else {
         setRecognizedProduct(null);
         Alert.alert("Product not recognized!");
