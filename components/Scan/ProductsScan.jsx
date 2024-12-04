@@ -75,6 +75,7 @@ export default function App() {
 
       if (matchedProduct) {
         setRecognizedProduct(matchedProduct);
+
         Speech.speak(`Product recognized: ${matchedProduct}`, {
           language: "en",
         }); // Announce product name

@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -14,8 +15,8 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "NSCameraUsageDescription": "We need access to your camera to scan products."
-      },
+      "NSMicrophoneUsageDescription": "This app needs access to your microphone for recording audio."
+    },
       "bundleIdentifier": "com.anonymous.EasyShop"
     },
     "android": {

@@ -2,11 +2,11 @@ import React from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, updateCartQuantity } from "../redux/cartSlice";
+import * as Speech from "expo-speech";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
 
-  // Get the product's quantity from the Redux store (instead of local state)
   const cartItem = useSelector((state) =>
     state.cart.cartItems.find((item) => item.id === product.id)
   );
@@ -20,8 +20,15 @@ const ProductCard = ({ product }) => {
     }
   };
 
+  const speakProductDetails = () => {
+    const message = `${product.name}. Price is ${product.price.toFixed(
+      2
+    )} dollars.`;
+    Speech.speak(message);
+  };
+
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={speakProductDetails}>
       <Image source={product.image} style={styles.productImage} />
       <View style={styles.cardContent}>
         <Text style={styles.productName}>{product.name}</Text>
@@ -32,54 +39,58 @@ const ProductCard = ({ product }) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#fff",
-    borderRadius: 8,
+    borderRadius: 12,
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 5,
-    marginBottom: 20,
-    flexDirection: "row",
-    padding: 15,
+    shadowRadius: 15,
+    elevation: 8,
+    marginBottom: 30,
+    padding: 20,
+    alignItems: "center",
   },
   productImage: {
-    width: 120,
-    height: 120,
-    borderRadius: 8,
-    marginRight: 15,
+    width: 280,
+    height: 280,
+    borderRadius: 12,
     resizeMode: "cover",
+    marginBottom: 20,
   },
   cardContent: {
-    flex: 1,
-    justifyContent: "space-between",
+    alignItems: "center",
   },
   productName: {
-    fontSize: 18,
+    fontSize: 40,
     fontWeight: "bold",
     color: "#333",
-    marginBottom: 5,
+    marginBottom: 10,
+    textAlign: "center",
   },
   productPrice: {
-    fontSize: 16,
+    fontSize: 36,
     color: "#6200EE",
-    marginBottom: 10,
+    marginBottom: 20,
+    textAlign: "center",
   },
   addButton: {
     backgroundColor: "#6200EE",
-    paddingVertical: 10,
-    borderRadius: 5,
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 8,
     alignItems: "center",
+    width: "80%",
+    marginTop: 10,
   },
   addButtonText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: "bold",
   },
 });

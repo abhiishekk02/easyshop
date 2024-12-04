@@ -15,7 +15,7 @@ import {
 } from "../../redux/cartSlice";
 
 const CartPage = () => {
-  const cartItems = useSelector((state) => state.cart.cartItems); // Get cart items from Redux store
+  const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
 
   const totalAmount = cartItems.reduce(
@@ -34,14 +34,32 @@ const CartPage = () => {
   };
 
   const handleRemove = (id) => {
-    dispatch(removeFromCart(id)); // Ensure the correct ID is passed to remove the item
+    dispatch(removeFromCart(id));
   };
 
   const handleClearCart = () => {
     Alert.alert("Clear Cart", "Are you sure you want to clear the cart?", [
       { text: "Cancel", style: "cancel" },
-      { text: "Yes", onPress: () => dispatch(clearCart()) }, // Dispatch clearCart action
+      { text: "Yes", onPress: () => dispatch(clearCart()) },
     ]);
+  };
+  const handleCheckOut = () => {
+    if (cartItems.length === 0) {
+      Alert.alert("Checkout Failed", "Your cart is empty.");
+      return;
+    }
+
+    Alert.alert(
+      "Order Placed",
+      "Your order has been placed successfully!",
+      [
+        {
+          text: "OK",
+          onPress: () => dispatch(clearCart()),
+        },
+      ],
+      { cancelable: false }
+    );
   };
 
   return (
@@ -55,10 +73,12 @@ const CartPage = () => {
           renderItem={({ item }) => (
             <View style={styles.cartItem}>
               <Text style={styles.cartItemText}>{item.name}</Text>
-              <Text style={styles.cartItemText}>
+              <Text style={styles.cartItemPrice}>
                 ${(item.price * item.quantity).toFixed(2)}
               </Text>
+
               <View style={styles.quantityContainer}>
+                <Text style={styles.quantityText}>Quantity: </Text>
                 <TouchableOpacity
                   onPress={() => handleDecrement(item.id, item.quantity)}
                   style={styles.quantityButton}
@@ -73,9 +93,10 @@ const CartPage = () => {
                   <Text style={styles.quantityButtonText}>+</Text>
                 </TouchableOpacity>
               </View>
+
               <TouchableOpacity
                 style={styles.removeButton}
-                onPress={() => handleRemove(item.id)} // Correctly pass ID to remove item
+                onPress={() => handleRemove(item.id)}
               >
                 <Text style={styles.removeButtonText}>Remove</Text>
               </TouchableOpacity>
@@ -87,15 +108,12 @@ const CartPage = () => {
 
       <Text style={styles.total}>Total: ${totalAmount.toFixed(2)}</Text>
 
-      <TouchableOpacity
-        style={styles.clearButton}
-        onPress={handleClearCart} // Call the handleClearCart function
-      >
+      <TouchableOpacity style={styles.clearButton} onPress={handleClearCart}>
         <Text style={styles.buttonText}>Clear Cart</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.checkoutButton}>
-        <Text style={styles.buttonText}>Proceed to Checkout</Text>
+      <TouchableOpacity style={styles.checkoutButton} onPress={handleCheckOut}>
+        <Text style={styles.buttonText}>Place Order</Text>
       </TouchableOpacity>
     </View>
   );
@@ -108,63 +126,75 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   heading: {
-    fontSize: 24,
+    fontSize: 32,
     fontWeight: "bold",
-    marginBottom: 20,
+    marginBottom: 30,
+    textAlign: "center",
   },
   emptyText: {
-    fontSize: 18,
+    fontSize: 22,
     color: "#888",
     textAlign: "center",
-    marginTop: 30,
+    marginTop: 40,
   },
   cartItem: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingVertical: 15,
-    borderBottomWidth: 1,
+    paddingVertical: 20,
+    marginBottom: 25,
+    borderBottomWidth: 2,
     borderBottomColor: "#ddd",
     alignItems: "center",
   },
   cartItemText: {
-    fontSize: 16,
+    fontSize: 30,
     color: "#333",
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  cartItemPrice: {
+    fontSize: 30,
+    color: "green",
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
   },
   quantityContainer: {
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: 15,
   },
   quantityButton: {
     backgroundColor: "#6200EE",
-    padding: 10,
-    borderRadius: 5,
-    marginHorizontal: 10,
+    padding: 15,
+    borderRadius: 8,
+    marginHorizontal: 15,
   },
   quantityButtonText: {
     color: "#fff",
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: "bold",
   },
   quantityText: {
-    fontSize: 16,
+    fontSize: 24,
     fontWeight: "bold",
   },
   removeButton: {
     backgroundColor: "#f44336",
-    paddingVertical: 8,
-    borderRadius: 5,
+    paddingVertical: 12,
+    borderRadius: 8,
     marginTop: 10,
     alignItems: "center",
+    width: "80%",
   },
   removeButtonText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: "bold",
   },
   total: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: "bold",
-    marginTop: 20,
+    marginTop: 30,
     textAlign: "center",
   },
   clearButton: {
@@ -183,7 +213,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 22,
     fontWeight: "bold",
   },
 });
